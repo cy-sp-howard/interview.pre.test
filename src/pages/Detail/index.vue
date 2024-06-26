@@ -61,7 +61,7 @@ onBeforeMount(() => {
     position: sticky
     top: 0
     display: grid
-    grid-template-columns: 2fr 7fr 4fr 4fr repeat(3, 20px)
+    grid-template-columns: 2fr 6fr 4fr 4fr repeat(3, 20px)
     font-size: 12px
     height: 50px
     align-items: center
