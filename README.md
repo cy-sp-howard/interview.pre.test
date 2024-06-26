@@ -2,7 +2,7 @@
 
 node 20、
 vue 3
-pnpm
+pnpm 9
 
 
 ```sh
@@ -15,7 +15,7 @@ pnpm install
 pnpm dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Compile and Minify for Production
 
 ```sh
 pnpm build
