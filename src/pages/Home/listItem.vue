@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { GetTotalvolfull } from '@/api/top'
 import type { RespData } from '@/utils/request'
+import priceToString from '@/utils/priceString'
 import { computed } from 'vue'
+
 const logoBase = import.meta.env.VITE_APP_LOGO_BASE
 const TWDExchange = 32.045
 
@@ -33,17 +35,6 @@ function volToString(val: number) {
     return { vol: Math.floor((val / 1000000) * 100) / 100, unit: 'M' }
   }
   return { vol: Math.floor(val), unit: '' }
-}
-function priceToString(val: number) {
-  let maximumFractionDigits = 3
-  if (val < 0.1) {
-    maximumFractionDigits = Math.floor(1 / val).toString().length + 2
-    if (maximumFractionDigits > 7) maximumFractionDigits = 7
-  } else if (val > 10000) {
-    maximumFractionDigits = 0
-  }
-  const floorDec = Math.pow(10, maximumFractionDigits)
-  return (Math.floor(val * floorDec) / floorDec).toLocaleString('en', { maximumFractionDigits })
 }
 </script>
 

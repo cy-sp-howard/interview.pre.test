@@ -2,6 +2,7 @@
 import { computed, onBeforeMount, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { GetTotalvolfull } from '@/api/top'
+import priceToString from '@/utils/priceString'
 const logoBase = import.meta.env.VITE_APP_LOGO_BASE
 
 const route = useRoute()
@@ -10,7 +11,7 @@ const router = useRouter()
 const item = reactive({
   name: '',
   changed: 0,
-  price: 0,
+  price: '0',
   logo: '',
 })
 
@@ -23,7 +24,7 @@ function getData() {
   }).then(({ body }) => {
     const found = body.Data.filter(i => 'RAW' in i).find(i => i.CoinInfo.Id === route.params.id)
     if (!found) return router.go(-1)
-    item.price = Math.floor(found.RAW.USD.PRICE * 1000) / 1000
+    item.price = priceToString(found.RAW.USD.PRICE)
     item.changed = Math.floor(found.RAW.USD.CHANGEPCT24HOUR * 100) / 100
     item.name = found.CoinInfo.Name
     item.logo = logoBase + found.CoinInfo.ImageUrl
@@ -67,8 +68,9 @@ onBeforeMount(() => {
     align-items: center
     justify-items: center
     gap: 8px
-    padding: 0 10px
+    padding: 5px 10px 0
     z-index: 1
+    box-sizing: border-box
     > img
       width: 100%
       height: 25px
@@ -117,8 +119,6 @@ onBeforeMount(() => {
         padding-top: 5px
         transform: scale(0.7)
         transform-origin: left top
-
-      > span
     > i
       width: 20px
       height: 20px
@@ -177,4 +177,5 @@ onBeforeMount(() => {
         box-shadow: inset 0 0 0 2px #eee
       &::after
         content: 'text'
+        font-size: 12px
 </style>
