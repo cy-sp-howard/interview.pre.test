@@ -9,7 +9,7 @@ const route = useRoute()
 const router = useRouter()
 
 const item = reactive({
-  name: '',
+  name: '-',
   changed: 0,
   price: '0',
   logo: '',
@@ -31,15 +31,14 @@ function getData() {
   })
 }
 
-onBeforeMount(() => {
-  getData()
-})
+onBeforeMount(getData)
 </script>
 
 <template lang="pug">
 #Detail
   header
-    img(:src="item.logo")
+    picture
+      img(v-if="item.logo" :src="item.logo")
     .target
       span {{ item.name }}
       small 選擇交易對
@@ -71,7 +70,7 @@ onBeforeMount(() => {
     padding: 5px 10px 0
     z-index: 1
     box-sizing: border-box
-    > img
+    img
       width: 100%
       height: 25px
       object-fit: contain
