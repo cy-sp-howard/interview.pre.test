@@ -20,13 +20,15 @@ export default function request<Resp>(
   const headers = new Headers()
   headers.set('content-type', 'application/json')
 
-  const base = new URL(isDevServer ? location.origin : import.meta.env.VITE_APP_API)
-  const fullURL = new URL(opts.url, base.origin + base.pathname)
+  const fullURL = getFullURL(opts.url)
 
   if (!opts.method || opts.method.toLowerCase() === 'get') {
     const opts_data = opts.data as Record<string, string>
     Object.entries(opts_data).forEach(([key, val]) => {
-      fullURL.searchParams.set(key, JSON.stringify(val))
+      const _val = ['number', 'string'].includes(typeof val)
+        ? val
+        : encodeURIComponent(JSON.stringify(val))
+      fullURL.searchParams.set(key, _val)
     })
   } else if (opts.data instanceof FormData) {
     body = opts.data
@@ -43,9 +45,10 @@ export default function request<Resp>(
   finalOpts = Object.fromEntries(
     Object.entries(mergedOpts).filter(([k]) => !['data', 'url', 'before', 'after'].includes(k)),
   ) as Omit<typeof mergedOpts, 'data' | 'url' | 'before' | 'after'>
+  finalURL = fullURL.href
 
   if (opts.before) {
-    const [_url, _opts] = opts.before(opts.url, finalOpts)
+    const [_url, _opts] = opts.before(finalURL, finalOpts)
     finalOpts = _opts
     finalURL = _url
   }
@@ -78,7 +81,12 @@ export default function request<Resp>(
   })
 }
 
+function getFullURL(url: string) {
+  const base = new URL(isDevServer ? location.origin : import.meta.env.VITE_APP_API)
+  return new URL(url, base.origin + base.pathname)
+}
+
 export type RespData<T extends (...args: never[]) => Promise<unknown>> = Awaited<
   ReturnType<T>
->['Data']
+>['body']
 export type ReqData<T extends (...args: never[]) => unknown> = Parameters<T>[0]

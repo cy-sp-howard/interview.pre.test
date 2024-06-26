@@ -1,0 +1,32 @@
+<script setup lang="ts">
+import { GetTotalvolfull } from '@/api/top'
+import { onMounted, reactive, ref } from 'vue'
+import type { ReqData, RespData } from '@/utils/request'
+import ListItem from './listItem.vue'
+
+const postData = reactive<ReqData<typeof GetTotalvolfull>>({
+  limit: 10,
+  tsym: 'USD',
+})
+const list = ref<RespData<typeof GetTotalvolfull>['Data']>([])
+
+function getList() {
+  GetTotalvolfull(postData).then(({ body }) => {
+    list.value = body.Data.filter(i => 'RAW' in i)
+  })
+}
+
+onMounted(() => {
+  getList()
+})
+</script>
+
+<template lang="pug">
+#home
+  list-item(v-for="(i,index) in list" :key="index" :item="i")
+</template>
+
+<style lang="sass" scoped>
+#home
+  background: #0a0f14
+</style>
