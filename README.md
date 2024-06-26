@@ -1,8 +1,8 @@
 # GameAPI.BitLobby
 
-node 20、
-vue 3
-pnpm 9
+node 20  
+vue 3  
+pnpm 9  
 
 
 ```sh
