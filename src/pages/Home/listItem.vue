@@ -48,7 +48,7 @@ function priceToString(val: number) {
 </script>
 
 <template lang="pug">
-router-link.list-item(:to="{name:'detail',state: itemRender}")
+router-link.list-item(:to="{name:'detail',params: {id:itemRender.CoinInfo.Id}}")
   img(:src="itemRender.logo")
   .currency
     span {{ itemRender.CoinInfo.Name }}
@@ -61,17 +61,20 @@ router-link.list-item(:to="{name:'detail',state: itemRender}")
 
 <style lang="sass" scoped>
 .list-item
-  min-width: 300px
-  max-width: 600px
+  min-width: 280px
+  width: 100%
   display: grid
-  grid-template-columns: 40px 2fr 3fr 1fr
+  grid-template-columns: 25px 2fr 3fr 1fr
   color: #fff
   text-decoration: none
   aspect-ratio: 5 / 1
-  font-size: 14px
+  font-size: 12px
   align-items: center
-  gap: 0 20px
+  gap: 0 10px
   padding: 0 10px
+  box-sizing: border-box
+  &:active
+    background: #fff1
   &:not(:last-child)
     border-bottom: 1px solid #333
   > img
@@ -102,18 +105,15 @@ router-link.list-item(:to="{name:'detail',state: itemRender}")
         margin-left: 10px
   > .change
     text-align: right
+    &.red::before
+      content: '+'
     &::after
       content: '%'
   small
     color: #aaa
-    font-size: 14px
+    font-size: 12px
   span,small
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
-
-.red
-  color: red
-.green
-  color: DarkSeaGreen
 </style>

@@ -29,7 +29,8 @@ onMounted(() => {
 <style lang="sass" scoped>
 #home
   background: #0a0f14
-  margin: 20px
+  margin: 10px
+  max-width: 600px
   &:empty
     height: 50vh
     display: grid
