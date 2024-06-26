@@ -20,7 +20,7 @@ export default function request<Resp>(
   const headers = new Headers()
   headers.set('content-type', 'application/json')
 
-  const base = new URL(isDevServer ? '/' : import.meta.env.VITE_APP_API)
+  const base = new URL(isDevServer ? location.origin : import.meta.env.VITE_APP_API)
   const fullURL = new URL(opts.url, base.origin + base.pathname)
 
   if (!opts.method || opts.method.toLowerCase() === 'get') {
