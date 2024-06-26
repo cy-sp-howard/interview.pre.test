@@ -1,0 +1,39 @@
+{
+  "name": "interview.pre.test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.1.4",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "dev": "husky && vite",
+    "build": "vite build",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore && vue-tsc --build --force && prettier --write src/"
+  },
+  "dependencies": {
+    "vue": "^3.4.29"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.8.0",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.14.5",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/language-plugin-pug": "^2.0.22",
+    "@vue/tsconfig": "^0.5.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.23.0",
+    "eslint-plugin-vue-pug": "^0.6.2",
+    "husky": "^9.0.11",
+    "npm-run-all2": "^6.2.0",
+    "prettier": "^3.2.5",
+    "pug": "^3.0.3",
+    "sass": "^1.77.6",
+    "typescript": "~5.4.0",
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.21"
+  }
+}
