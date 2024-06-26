@@ -29,4 +29,20 @@ onMounted(() => {
 <style lang="sass" scoped>
 #home
   background: #0a0f14
+  &:empty
+    height: 50vh
+    display: grid
+    align-items: center
+    justify-content: center
+    &::before
+      content: ''
+      width: 50px
+      height: 50px
+      border-radius: 50%
+      border: 3px solid #fff
+      animation: whirl 1s linear infinite
+
+@keyframes whirl
+  100%
+    transform: rotate3d(0,1,0,360deg)
 </style>

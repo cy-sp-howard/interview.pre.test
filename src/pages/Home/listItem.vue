@@ -9,6 +9,7 @@ const props = defineProps<{ item: RespData<typeof GetTotalvolfull>['Data'][numbe
 const itemRender = computed(() => {
   const i = props.item
   const changed = Math.floor(i.RAW.USD.CHANGEPCT24HOUR * 100) / 100
+  const { vol, unit } = volToString(i.RAW.USD.VOLUME24HOUR)
   return Object.assign(
     {
       logo: logoBase + i.CoinInfo.ImageUrl,
@@ -16,12 +17,23 @@ const itemRender = computed(() => {
       price_tw: priceToString(i.RAW.USD.PRICE * TWDExchange),
       changed,
       changedColor: changed > 0 ? 'red' : changed < 0 ? 'green' : '',
-      vol: i.RAW.USD.VOLUME24HOUR.toLocaleString(),
+      vol,
+      volUnit: unit,
     },
     props.item,
   )
 })
 
+function volToString(val: number) {
+  if (val >= 100000000000) {
+    return { vol: Math.floor((val / 1000000000000) * 100) / 100, unit: 'T' }
+  } else if (val >= 100000000) {
+    return { vol: Math.floor((val / 1000000000) * 100) / 100, unit: 'B' }
+  } else if (val >= 10000) {
+    return { vol: Math.floor((val / 1000000) * 100) / 100, unit: 'M' }
+  }
+  return { vol: Math.floor(val), unit: '' }
+}
 function priceToString(val: number) {
   let maximumFractionDigits = 3
   if (val < 0.1) {
@@ -40,7 +52,7 @@ router-link.list-item(:to="{name:'detail',state: itemRender}")
   img(:src="itemRender.logo")
   .currency
     span {{ itemRender.CoinInfo.Name }}
-    small {{ itemRender.vol }}
+    small(:data-unit="itemRender.volUnit") {{ itemRender.vol }}
   .value 
     span {{ itemRender.price }}
     small {{ itemRender.price_tw }}
@@ -68,9 +80,13 @@ router-link.list-item(:to="{name:'detail',state: itemRender}")
     object-fit: contain
   > .currency
     display: grid
-    > small:before
-      content: 'Vol'
-      margin-right: 5px
+    > small
+      &::before
+        content: 'Vol'
+        margin-right: 5px
+      &::after
+        content: attr(data-unit)
+        margin-left: 5px
   > .value
     display: grid
     text-align: right
