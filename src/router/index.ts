@@ -6,7 +6,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory('/pre-test'),
+  history: createWebHashHistory('/pre-test/'),
   routes,
 })
 export default router
